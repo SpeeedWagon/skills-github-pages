@@ -1,15 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Be My Valentine?</title>
-	</head>
-<body>
-	<h1>
-		Will you be my Valentine?
-	</h1>
-</body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vei fi Valentina mea?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe4e1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Prevents scrolling when the button moves */
+            touch-action: manipulation;
+        }
 
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 85%;
+            max-width: 350px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* The Peeking Cat */
+        .cat-container {
+            position: absolute;
+            top: -70px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+            z-index: -1;
+            transition: top 0.3s;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+            min-height: 50px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            touch-action: none; /* Prevents zoom/delay on mobile taps */
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            order: 1;
+        }
+
+        #noBtn {
+            background-color: #6c757d;
+            color: white;
+            position: relative; /* Needed for teleporting */
+            order: 2;
+        }
+
+        #success {
+            display: none;
+            color: #d63384;
+            font-size: 1.2rem;
+        }
+
+        .cat-gif {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="cat-container" id="catEmoji">🤔</div>
+        
+        <div id="content">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyc3BneXFid3R5Z3R4cnF3ZXJ0eXVpb3A4OWFzZGYxMjM0NTY3ODkvZXZlbnQvY2F0LWxvdmUuZ2lm/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute Cat" class="cat-gif">
+            <h1>Vei fi Valentina mea?</h1>
+            <div class="buttons">
+                <button id="yesBtn" onclick="celebrate()">Da</button>
+                <button id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">Nu</button>
+            </div>
+        </div>
+        
+        <div id="success">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHIyc3BneXFid3R5Z3R4cnF3ZXJ0eXVpb3A4OWFzZGYxMjM0NTY3ODkvZXZlbnQvaGFwcHktY2F0LmdpZg/MDJ9IbxxvDUQM/giphy.gif" width="150">
+            <h2>Yay 🥰</h2>
+			<h2>❤Te iubesc foarte mult❤</h2>
+        </div>
+    </div>
+
+    <script>
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const cat = document.getElementById('catEmoji');
+			
+			btn.style.position = 'fixed';
+            
+            // Randomize position - keeping it within viewport bounds
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+            
+            // Make the cat "peek" more when they try to click No
+            cat.style.top = "-90px";
+            setTimeout(() => { cat.style.top = "-70px"; }, 200);
+        }
+
+        function celebrate() {
+            document.getElementById('content').style.display = 'none';
+            document.getElementById('success').style.display = 'block';
+            document.body.style.backgroundColor = '#ffccd5';
+            document.getElementById('catEmoji').innerHTML = '😻';
+        }
+    </script>
+</body>
 </html>
